@@ -1,7 +1,9 @@
 package fibonacci
 
 import akka.actor.{ActorSystem, Props}
+import akka.serialization.SerializationExtension
 import akka.testkit.{ImplicitSender, TestKit}
+import fibonacci.serialization.FibonacciState.GeneratorState
 import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
 
 class FibonacciGeneratorSpec
@@ -19,16 +21,17 @@ class FibonacciGeneratorSpec
     "get the numbers in the expected secuence" in {
       import FibonacciGeneratorProtocol._
       val fibo = system.actorOf(Props[FibonacciGenerator])
+      fibo ! ResetGenerator
       fibo ! GetNextNumber
-      expectMsg(BigInt(1))
+      expectMsg(1L)
       fibo ! GetNextNumber
-      expectMsg(BigInt(2))
+      expectMsg(2L)
       fibo ! GetNextNumber
-      expectMsg(BigInt(3))
+      expectMsg(3L)
       fibo ! GetNextNumber
-      expectMsg(BigInt(5))
+      expectMsg(5L)
       fibo ! GetNextNumber
-      expectMsg(BigInt(8))
+      expectMsg(8L)
     }
   }
 }

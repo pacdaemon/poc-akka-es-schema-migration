@@ -1,0 +1,7 @@
+syntax = "proto3";
+package fibonacci.serialization;
+
+message GeneratorState {
+    uint64 f0 = 1;
+    uint64 f1 = 2;
+}
